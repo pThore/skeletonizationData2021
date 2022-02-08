@@ -54,6 +54,10 @@ Propagation::~Propagation(){
 
 
 int * Propagation::coord2D(int index) const{
+  if( index > nI * nJ) {
+    cerr << "index out of bounds " << index << " [" << nI << " " << nJ << "]"<<endl;
+    exit(0);
+  }
   int* out = new int[2];
   out[0] = index / nI;
   out[1] = index % nI;
@@ -62,6 +66,10 @@ int * Propagation::coord2D(int index) const{
 
 
 int Propagation::coord1D(int i,int j) const{
+  if( ! coordExists(i,j) ) {
+    cerr << "Error on coordinate " << i << "," << j << " [" << nI << " " << nJ << "]"<<endl;
+    exit(0);
+  }
   return i * nI + j ;
 }
 
@@ -77,8 +85,9 @@ vector<int> * Propagation::neighbors(int position1D) const{
     int* delta = border[u];
     int i = delta[0] + coord[0];
     int j =  delta[1] + coord[1];
+    if(!coordExists(i,j)) continue;
     int pos2D = coord1D(i,j);
-    if (coordExists(i,j) && parentIndex[pos2D] < 0 && slowness[pos2D] != nullValue){
+    if (parentIndex[pos2D] < 0 && slowness[pos2D] != nullValue){
       retVal->push_back(pos2D);
     }
   }

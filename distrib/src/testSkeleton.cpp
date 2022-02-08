@@ -28,6 +28,10 @@ void TestSkeleton::readProperty(char * property_file){
   while(infile >> value){
     property[index++] = value;
   }
+  if(index == 0){
+    cerr << "file "<< property_file << " is empty" <<  endl;
+    exit(0);
+  }
   if(index != nI*nJ) {
     cerr << "wrong file "<< property_file << " read " << index << " lines " << " instead of " << nI*nJ <<  endl;
     exit(0);
