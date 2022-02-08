@@ -1,4 +1,4 @@
-this distribution has been developed to demonstrate the skeletonization technique proposed by Thore & Lucas (2021)
+this distribution has been developed to demonstrate the skeletonization technique proposed by Thore & Lucas (2022)
 
 It consists in 2 folders: 
 	-src: contains the source code for running a skeletonization
