@@ -20,14 +20,14 @@ for example a skeleton of the 201,201 grid with 3 branches:
  second branch with 3 points on the third line 
  third branch with 2 points on the third column 
 would look like:
-1 0 0 	//1st branch
+1 0 0 	//1st branch: [ vertex index, coord i, coord j ]
 2 1 1 	//1st branch
 3 2 2 	//1st branch
 6 2 3 	//3rd branch
 4 3 2 	//2nd branch
 5 4 2 	//2nd branch
 SEGMENT
-1 2 	//1st branch
+1 2 1 1	//1st branch: [ vertex index, vertex index, rank (topology), branch index ]  
 2 3 	//1st branch
 3 4 	//2nd branch
 4 5 	//2nd branch

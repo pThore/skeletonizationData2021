@@ -82,7 +82,7 @@ int main(int c, char* argv[]){
   if(c < 3){
     cerr << "Usage: testSkeleton grid_file threshold [seed] >  outputFile" << endl;
     cerr << "seed [optional] with format 'i,j'" << endl;
-    cerr << "example: testSkeleton continuousBorderToF.prop 50 2,2 > myOutputFile" << endl;
+    cerr << "example: testSkeleton  ../data/input/DTMap.prop 50 2,2 >  skeleton.skel" << endl;
     exit(0);
   }
   int seed_i=2;
