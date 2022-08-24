@@ -1,5 +1,6 @@
 #include "propagation.h"
 #include "skeleton.h"
+#include "topology.h"
 class TestSkeleton {
  public:
   double nullValue;
@@ -8,7 +9,10 @@ class TestSkeleton {
   float * property;
 
   void readProperty(char * file);
-  void write(Skeleton& skeleton);
+  void write(Skeleton& skeleton, bool withEdges);
+
+  void write(Topology& topology);
+
   TestSkeleton(){};
 
   

@@ -15,6 +15,8 @@ public:
     first = 0;
     second = 0;
   }
+ private:
+  Edge(const Edge & src);
 };
 
 class Skeleton {
@@ -23,6 +25,7 @@ class Skeleton {
   Edge * edges;
   int ** coords;
   int nbPoints;
+  int nbEdges;
  public:
   Skeleton(const Propagation& propagation);
   ~Skeleton();
@@ -31,12 +34,18 @@ class Skeleton {
   inline int getNbPoints() const{
     return nbPoints;
   }
+
+  inline int getNbEdges() const {
+    return nbEdges;
+  }
+
   inline int** getCoords() {
     return coords;
   }
   inline Edge* getEdges() {
     return edges;
   }
+
  private:
   Skeleton(const Skeleton& propagation);
 

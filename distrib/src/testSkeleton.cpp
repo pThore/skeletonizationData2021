@@ -1,10 +1,12 @@
 #include "testSkeleton.h"
+#include "topology.h"
 #include <string.h>
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string.h>
+#include <set>
 using namespace std;
 
 void TestSkeleton::readProperty(char * property_file){
@@ -28,10 +30,6 @@ void TestSkeleton::readProperty(char * property_file){
   while(infile >> value){
     property[index++] = value;
   }
-  if(index == 0){
-    cerr << "file "<< property_file << " is empty" <<  endl;
-    exit(0);
-  }
   if(index != nI*nJ) {
     cerr << "wrong file "<< property_file << " read " << index << " lines " << " instead of " << nI*nJ <<  endl;
     exit(0);
@@ -41,19 +39,42 @@ void TestSkeleton::readProperty(char * property_file){
   }
 }
 
-void TestSkeleton::write(Skeleton & skeleton) {
+void TestSkeleton::write(Skeleton & skeleton,bool withEdges) {
   int index = 1;
   for (int p=0; p<skeleton.getNbPoints(); p++) {
     cout << index++ << " " << skeleton.getCoords()[p][0] << " "<< skeleton.getCoords()[p][1]<< endl;
   }
+  if(!withEdges) return;
+
   cout << "SEGMENT"<<endl;
-  for (int e=0; e<skeleton.getNbPoints()-1; e++) {
+
+  for (int e=0; e<skeleton.getNbEdges(); e++) {
     cout << skeleton.getEdges()[e].first << " " << skeleton.getEdges()[e].second <<endl;
   }
 }
 
 
 
+void TestSkeleton::write(Topology & topology){
+  cout << "SEGMENT"<<endl;
+  set<Branch *> done ;
+  int count=0;
+  for (int i=0; i< topology.nbBranches; i++) {
+    Branch * b = topology.ptToBranch[i];
+    if(b == 0) continue;
+    if(done.find(b) != done.end()) continue;
+    count++;
+    done.insert(b);
+    int r = topology.rank(b);
+    int s = b->firstPoint();
+    for (int j = 1; j < b->pts.size(); j++){
+      int l = b->pts[j];
+      cout << s << " " << l << " " << r << " " << count << endl;
+      s = l;
+    }
+  }
+
+}
 
 
 int main(int c, char* argv[]){
@@ -61,7 +82,7 @@ int main(int c, char* argv[]){
   if(c < 3){
     cerr << "Usage: testSkeleton grid_file threshold [seed] >  outputFile" << endl;
     cerr << "seed [optional] with format 'i,j'" << endl;
-    cerr << "example: testSkeleton ../data/input/DTMap.prop 50 2,2 > ../data/output/skeleton.skel" << endl;
+    cerr << "example: testSkeleton continuousBorderToF.prop 50 2,2 > myOutputFile" << endl;
     exit(0);
   }
   int seed_i=2;
@@ -87,7 +108,10 @@ int main(int c, char* argv[]){
     
     Skeleton skeleton (prop);
     skeleton.followPoints(atoi(argv[2]));
-    reader.write(skeleton);
+    reader.write(skeleton,false);
+
+    Topology topology (skeleton.getEdges(),skeleton.getNbEdges(), skeleton.getNbPoints());
+    reader.write(topology);
   }
   exit(1);
 }

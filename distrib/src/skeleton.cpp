@@ -21,6 +21,7 @@ void Skeleton::followPoints(int densityThreshold){
   int* mapIndex = new int[nij];
   memset(mapIndex,-1, nij*sizeof(int));
   nbPoints = 0;
+
   for (int i = 0 ; i < nij; i++)
     if (density[i] >= densityThreshold)
       nbPoints++;
@@ -55,7 +56,7 @@ void Skeleton::followPoints(int densityThreshold){
       nextPoint = propagation.parentIndex[startPoint];
     }
   }
-
+  nbEdges = k;
   delete[] mapIndex;
   delete[] density;
 }
