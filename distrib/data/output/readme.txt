@@ -28,10 +28,10 @@ would look like:
 5 4 2 	//2nd branch
 SEGMENT
 1 2 1 1	//1st branch: [ vertex index, vertex index, rank (topology), branch index ]  
-2 3 	//1st branch
-3 4 	//2nd branch
-4 5 	//2nd branch
-3 6 	//3rd branch
+2 3 1 1	//1st branch
+3 4 2 2	//2nd branch
+4 5 2 2	//2nd branch
+3 6 2 3	//3rd branch
 
 
 x	x	x	x	x	x
